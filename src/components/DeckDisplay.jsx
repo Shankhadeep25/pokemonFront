@@ -10,7 +10,7 @@ export default function DeckDisplay({ selectable = false, selectedIds = [], onSe
         const fetchDeck = async () => {
             try {
                 const res = await getDeck();
-                setDeck(res.data.deck || []);
+                setDeck(res.data.data?.deck || []);
             } catch {
                 // handled by interceptor
             } finally {
