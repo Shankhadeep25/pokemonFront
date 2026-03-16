@@ -17,8 +17,13 @@ export function SocketProvider({ children }) {
             return;
         }
 
-        const newSocket = io('http://localhost:5000', {
+        // Use the same backend URL as the API, but strip /api for socket connection
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const socketUrl = apiUrl.replace(/\/api\/?$/, '');
+
+        const newSocket = io(socketUrl, {
             auth: { token },
+            transports: ['websocket', 'polling'],
         });
 
         newSocket.on('connect', () => {
